@@ -1,0 +1,34 @@
+services:
+  backup:
+    build: .
+    command: python backup_server.py
+    environment:
+      BACKUP_HOST: 0.0.0.0
+      BACKUP_PORT: 5001
+      BACKUP_DB: /app/runtime/backup.db
+      BACKUP_LOG: /app/runtime/backup.log
+    volumes:
+      - backup-data:/app/runtime
+    ports:
+      - "5001:5001"
+
+  primary:
+    build: .
+    command: python primary_server.py
+    depends_on:
+      - backup
+    environment:
+      PRIMARY_HOST: 0.0.0.0
+      PRIMARY_PORT: 5000
+      BACKUP_HOST: backup
+      BACKUP_PORT: 5001
+      PRIMARY_DB: /app/runtime/primary.db
+      PRIMARY_LOG: /app/runtime/primary.log
+    volumes:
+      - primary-data:/app/runtime
+    ports:
+      - "5000:5000"
+
+volumes:
+  primary-data:
+  backup-data:

@@ -1,0 +1,18 @@
+{
+  "primary": {
+    "host": "127.0.0.1",
+    "port": 5000
+  },
+  "backup": {
+    "host": "127.0.0.1",
+    "port": 5001
+  },
+  "storage": {
+    "primary": "data/primary.db",
+    "backup": "data/backup.db"
+  },
+  "logs": {
+    "primary": "logs/primary.log",
+    "backup": "logs/backup.log"
+  }
+}
